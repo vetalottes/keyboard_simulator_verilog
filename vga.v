@@ -12,13 +12,13 @@ module vga(
     );
   
 
-// Horizontal parameters (measured in clock cycles)
+// Параметры горизонтальной синхронизации (измеряются в тактах)
 parameter [9:0] H_ACTIVE  =  10'd799;
 parameter [9:0] H_FRONT   =  10'd55;
 parameter [9:0] H_PULSE   =  10'd119;
 parameter [9:0] H_BACK    =  10'd63;
 
-// Vertical parameters (measured in lines)
+//  Параметры вертикальной синхронизации (в линиях)
 parameter [9:0] V_ACTIVE   =  10'd599;
 parameter [9:0] V_FRONT    =  10'd36;
 parameter [9:0] V_PULSE =  10'd5;
@@ -56,18 +56,16 @@ always @(posedge clk50) begin
   newframe <= 1'b0;
   newline <= 1'b0;
   
-        //////////////////////////////////////////////////////////////////////////
         ///////////////////////// HORIZONTAL /////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////
         case(h_state)
             H_ACTIVE_STATE: begin
-                // Iterate horizontal counter, zero at end of ACTIVE mode
+                // итерация горизонтального счетчика h_counter, ноль при H_ACTIVE
                 h_counter <= (h_counter==H_ACTIVE)?10'd0:(h_counter + 10'd1);
-                // Set hsync
+                // установка hsync в 1
                 hsync_reg <= 1'b1;
-                // Deassert line done
+                // сброс newline
                 newline <= 1'b0;
-                // State transition
+                // переход состояния
                 h_state <= (h_counter == H_ACTIVE)?H_FRONT_STATE:H_ACTIVE_STATE;
             end
              
@@ -101,9 +99,7 @@ always @(posedge clk50) begin
             end
             default:;
         endcase
-        //////////////////////////////////////////////////////////////////////////
         ///////////////////////// VERTICAL ///////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////
         case(v_state)
             V_ACTIVE_STATE: begin
                 // increment vertical counter at end of line, zero on state transition
@@ -151,4 +147,5 @@ end
 assign hsync = hsync_reg ;
 assign vsync = vsync_reg ;
 assign valid = (h_state == H_ACTIVE_STATE) && (v_state == V_ACTIVE_STATE);
+    
 endmodule
