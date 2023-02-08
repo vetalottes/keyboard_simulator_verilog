@@ -21,7 +21,7 @@ begin
 		end
 		4'd1: 
 		begin
-			// ���������� ���� ������
+			// записываем биты данных
 			recieved_data[0] <= r;
 			state <= state + 1;
 		end
@@ -62,6 +62,7 @@ begin
 		end
 		4'd9: 
 		begin
+			// проверяем бит четности
 			if (^recieved_data^r)
                 state <= state + 1;
 			else state <= 0;
