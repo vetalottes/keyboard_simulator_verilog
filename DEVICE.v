@@ -4,7 +4,6 @@ module DEVICE(
     input clk,
     input clk_pc2,
     input data_pc2,
-    //output lamp,
     output hsync,
     output vsync,
     output [3:0] r,
@@ -12,23 +11,12 @@ module DEVICE(
     output [3:0] b
 );
 
-//wire [31:0] dataOut; // for result SQUARE
-
-wire set_signal_enable;
-wire reset_signal_enable;
 wire new_clk;
-//wire lamp = lamp;
-
-//assign clk = clk_old; //------------commite for bitstream
-//CLK_DIV div(
-//    .clk(clk_old), 
-//    .new_clk(clk));  //-----------uncommite for bitstream
-    
 CLK_DIV div(.clk(clk), .new_clk(new_clk));
 
-wire [7:0] recieved_data; // то что выходит из ресивера для дешифратора
-wire [7:0] inForFSM; // то что выходит из дешифратора для автомата
-wire [7:0] res_code; // то что выходит из автомата для вга
+wire [7:0] recieved_data;  // С‚Рѕ С‡С‚Рѕ РІС‹С…РѕРґРёС‚ РёР· СЂРµСЃРёРІРµСЂР° РґР»СЏ РґРµС€РёС„СЂР°С‚РѕСЂР°
+wire [7:0] inForFSM; // С‚Рѕ С‡С‚Рѕ РІС‹С…РѕРґРёС‚ РёР· РґРµС€РёС„СЂР°С‚РѕСЂР° РґР»СЏ Р°РІС‚РѕРјР°С‚Р°
+wire [7:0] res_code; // С‚Рѕ С‡С‚Рѕ РІС‹С…РѕРґРёС‚ РёР· Р°РІС‚РѕРјР°С‚Р° РґР»СЏ vga
 wire set_signal;
 wire reset_signal;
 reg flag = 0;
@@ -57,7 +45,6 @@ FIB fib2(
     .reset_signal(reset_signal),
     .code(inForFSM),
     .res_code(res_code),
-    //.lamp(lamp),
     .res_out(res_out));
     
 top_vga display(
