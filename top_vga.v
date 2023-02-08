@@ -21,7 +21,7 @@ wire [9:0] x;
 wire [9:0] y;
 wire newframe;
 wire newline;
-wire valid; //?
+wire valid;
 reg [3:0]rval;
 reg [3:0]gval;
 reg [3:0]bval; 
@@ -43,17 +43,13 @@ reg [5:0] char;
 wire [7:0] line_px;
 wire [7:0] column_px;
 
-assign line_px = {1'b0,y[9:3]}; //? как опр почему 6-7
+assign line_px = {1'b0,y[9:3]};
 assign column_px = {1'b0,x[9:3]};
 
 reg [9:0] line_counter;
  
 initial begin
     char = 6'b0;
-    //mem_pointer = 10'b0;
-    //i = 32'b0;
-    //for (i = 32'b0;i<HEIGHT;i = i+32'b1) VGA_MEMORY[i] = 8'h00000000;
-    //result = 60'b0;
     line_counter = 10'b1;
     rval = 4'b0;
     bval = 4'b0;
@@ -93,7 +89,6 @@ always @(*) begin
                     8'h32: char = 6'b010111; // b
                     8'h31: char = 6'b011000; // n 
                     8'h3A: char = 6'b011001; // m
-                    // плюс
                     8'h45: char = 6'b011010; // 0
                     8'h16: char = 6'b011011; // 1
                     8'h1E: char = 6'b011100; // 2
@@ -131,8 +126,6 @@ chars chars(
   );
    
    always@(posedge clk) begin 
-       //result <= result;
-       //mem_pointer <= mem_pointer;
        rval = 4'b0;
        bval = 4'b0;
        gval = 4'b0;
