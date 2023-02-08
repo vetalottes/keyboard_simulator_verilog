@@ -148,4 +148,5 @@ chars chars(
 assign r = rval;
 assign g = gval;
 assign b = bval;
+        
 endmodule
